@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+!/.*
+src/assets/*
+tailwind.config.js
+vite.config.ts
+postcss.config.js
+__mocks__/*
+
