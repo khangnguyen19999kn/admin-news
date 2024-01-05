@@ -2,12 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 
 import { CACHE_DATA_STALE_TIME } from "@/constant/variable";
 
-import studentApi from "../service/student.api";
+import newsApi from "../service/news.api";
 
 export function useGetStudentList() {
   return useQuery({
     queryKey: ["student"],
-    queryFn: () => studentApi.getListStudent(),
+    queryFn: () => newsApi.getListStudent(),
     staleTime: CACHE_DATA_STALE_TIME.MEDIUM,
   });
 }

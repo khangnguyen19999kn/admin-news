@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 
-import studentApi from "../service/student.api";
+import newsApi from "../service/news.api";
 
 export const useUpdateStudent = () => {
   return useMutation({
-    mutationFn: (student: string) => studentApi.updateStudent(student),
+    mutationFn: (student: string) => newsApi.updateStudent(student),
   });
 };

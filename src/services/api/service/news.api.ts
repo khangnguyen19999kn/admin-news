@@ -28,46 +28,46 @@ const pathNewsAPI = {
   getGender: "/GetGenderCount",
   getStatistics: "/GetStudentStatistics",
 };
-export const newsApi = axios.create({
+export const newsApiBase = axios.create({
   baseURL: import.meta.env.VITE_NEWS_API as string,
 });
 
-const studentApi = {
+const newsApi = {
   async getListNews() {
-    const response = await newsApi.get<TNews[]>(pathNewsAPI.getAllNews);
+    const response = await newsApiBase.get<TNews[]>(pathNewsAPI.getAllNews);
     return response.data;
   },
 
   async getListStudent() {
-    const response = await newsApi.get<string>(pathNewsAPI.getAllStudent);
+    const response = await newsApiBase.get<string>(pathNewsAPI.getAllStudent);
     return response.data;
   },
   async getStudentByName(name: string) {
-    const response = await newsApi.get<string>(pathNewsAPI.getStudent(name));
+    const response = await newsApiBase.get<string>(pathNewsAPI.getStudent(name));
     return response.data;
   },
   async updateStudent(student: string): Promise<string> {
-    const response = await newsApi.post(pathNewsAPI.updateStudent, student);
+    const response = await newsApiBase.post(pathNewsAPI.updateStudent, student);
     return response.data as string;
   },
   async deleteStudent(id: string): Promise<string> {
     const data = new URLSearchParams();
     data.append("studentId", id);
-    const response = await newsApi.post(pathNewsAPI.deleteStudent, data);
+    const response = await newsApiBase.post(pathNewsAPI.deleteStudent, data);
     return response.data as string;
   },
   async addStudent(student: string): Promise<string> {
-    const response = await newsApi.post(pathNewsAPI.addStudent, student);
+    const response = await newsApiBase.post(pathNewsAPI.addStudent, student);
     return response.data as string;
   },
   async getGenderCount() {
-    const response = await newsApi.get<string>(pathNewsAPI.getGender);
+    const response = await newsApiBase.get<string>(pathNewsAPI.getGender);
     return response.data;
   },
   async getStatistics() {
-    const response = await newsApi.get<string>(pathNewsAPI.getStatistics);
+    const response = await newsApiBase.get<string>(pathNewsAPI.getStatistics);
     return response.data;
   },
 };
 
-export default studentApi;
+export default newsApi;

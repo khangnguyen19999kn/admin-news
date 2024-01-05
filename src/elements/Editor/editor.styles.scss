@@ -1,0 +1,24 @@
+input[type="file"].se-input-form {
+  position: relative;
+
+  padding: 3px 4px !important;
+
+  border: hidden;
+
+  &::file-selector-button {
+    position: relative;
+
+    padding: 0.2em 0.4em;
+
+    background-color: #f3f3f3;
+    border: 1px solid #000;
+    border-radius: 0.2em;
+
+    transition: 0.5s;
+  }
+
+  &:hover::file-selector-button {
+    background-color: #fff;
+    border: 1px solid #f3f3f3;
+  }
+}

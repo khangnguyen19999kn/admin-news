@@ -9,6 +9,7 @@ import style from "@/pages/ListNews/ListNewsStyle.module.scss";
 import TableNews from "@/pages/ListNews/components/TableNews";
 import useNotification from "@/pages/ListNews/hooks/useNotification";
 import { useGetNewsList } from "@/services/api/news/useGetAllNews";
+import { Link } from "react-router-dom";
 export default function ListNews() {
   const [inputName, setInputName] = useState("");
   const { data: ListNews, isLoading } = useGetNewsList();
@@ -40,7 +41,9 @@ export default function ListNews() {
           placeholder="Enter the name of student to find"
           onChange={handleInputName}
         />
-        <Button type="primary">Add News</Button>
+        <Link to="addNews">
+          <Button type="primary">Add News</Button>
+        </Link>
       </div>
 
       {isLoading ? <Skeleton active /> : <TableNews listNews={ListNews} />}

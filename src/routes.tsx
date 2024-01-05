@@ -1,4 +1,5 @@
 import LayoutContainer from "@/elements/layoutContainer/LayoutContainer";
+import AddNews from "@/pages/AddNews/AddNews";
 import ListNews from "@/pages/ListNews/ListNews";
 import { paths } from "@/services/paths";
 
@@ -25,8 +26,12 @@ const router = createBrowserRouter([
             element: <p>Home</p>,
           },
           {
-            path: paths.news,
+            path: paths.news.list,
             element: <ListNews />,
+          },
+          {
+            path: paths.news.addNews,
+            element: <AddNews />,
           },
           {
             path: paths.users,

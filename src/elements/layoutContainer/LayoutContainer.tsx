@@ -56,7 +56,8 @@ const items: TMenuItem[] = [
 export default function LayoutContainer({ children }: { children: ReactNode }) {
   const [isCollapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
-  const [breadcrumb, setBreadcrumb] = useState<string>(mapPathToLabel[pathname as EPath]);
+  const routePathName = pathname.split("/")[1];
+  const [breadcrumb, setBreadcrumb] = useState<string>(mapPathToLabel[routePathName as EPath]);
 
   const {
     token: { colorBgContainer },
@@ -76,7 +77,7 @@ export default function LayoutContainer({ children }: { children: ReactNode }) {
         <div className={styleLayout.groupItemNavbar}>
           <Menu
             theme="dark"
-            defaultSelectedKeys={[mapPathnameToKey[pathname as EPath]]}
+            defaultSelectedKeys={[mapPathnameToKey[routePathName as EPath]]}
             mode="inline"
             onClick={handleMenu}
           >
