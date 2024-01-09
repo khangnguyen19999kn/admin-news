@@ -1,3 +1,4 @@
+import { TFormAddNews } from "@/pages/AddNews/types";
 import { TNews } from "@/pages/ListNews/types";
 import { UseMutationOptions } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
@@ -19,14 +20,8 @@ export type TConfigMutation<
 > = UseMutationOptions<TFieldResponse, AxiosError, TFieldPayload>;
 
 const pathNewsAPI = {
-  getAllNews: "/news",
-  getAllStudent: "/GetAllStudents",
-  updateStudent: "?op=UpdateStudent",
-  getStudent: (name: string) => `/GetStudent?studentName=${name}`,
-  deleteStudent: "/DeleteStudent?studentId=${id}",
-  addStudent: "?op=AddStudent",
-  getGender: "/GetGenderCount",
-  getStatistics: "/GetStudentStatistics",
+  allNews: "/news",
+  deleteNews: (id: string) => `/news/${id}`,
 };
 export const newsApiBase = axios.create({
   baseURL: import.meta.env.VITE_NEWS_API as string,
@@ -34,38 +29,15 @@ export const newsApiBase = axios.create({
 
 const newsApi = {
   async getListNews() {
-    const response = await newsApiBase.get<TNews[]>(pathNewsAPI.getAllNews);
+    const response = await newsApiBase.get<TNews[]>(pathNewsAPI.allNews);
     return response.data;
   },
-
-  async getListStudent() {
-    const response = await newsApiBase.get<string>(pathNewsAPI.getAllStudent);
+  async deleteNews(id: string) {
+    const response = await newsApiBase.delete<TActionResponse>(pathNewsAPI.deleteNews(id));
     return response.data;
   },
-  async getStudentByName(name: string) {
-    const response = await newsApiBase.get<string>(pathNewsAPI.getStudent(name));
-    return response.data;
-  },
-  async updateStudent(student: string): Promise<string> {
-    const response = await newsApiBase.post(pathNewsAPI.updateStudent, student);
-    return response.data as string;
-  },
-  async deleteStudent(id: string): Promise<string> {
-    const data = new URLSearchParams();
-    data.append("studentId", id);
-    const response = await newsApiBase.post(pathNewsAPI.deleteStudent, data);
-    return response.data as string;
-  },
-  async addStudent(student: string): Promise<string> {
-    const response = await newsApiBase.post(pathNewsAPI.addStudent, student);
-    return response.data as string;
-  },
-  async getGenderCount() {
-    const response = await newsApiBase.get<string>(pathNewsAPI.getGender);
-    return response.data;
-  },
-  async getStatistics() {
-    const response = await newsApiBase.get<string>(pathNewsAPI.getStatistics);
+  async createNews(news: TFormAddNews) {
+    const response = await newsApiBase.post<TActionResponse>(pathNewsAPI.allNews, news);
     return response.data;
   },
 };

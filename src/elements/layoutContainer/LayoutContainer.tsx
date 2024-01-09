@@ -73,26 +73,28 @@ export default function LayoutContainer({ children }: { children: ReactNode }) {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={isCollapsed} onCollapse={value => setCollapsed(value)}>
-        {!isCollapsed ? <h1 className={styleLayout.titleNav}>Tabloid News Management</h1> : ""}
-        <div className={styleLayout.groupItemNavbar}>
-          <Menu
-            theme="dark"
-            defaultSelectedKeys={[mapPathnameToKey[routePathName as EPath]]}
-            mode="inline"
-            onClick={handleMenu}
-          >
-            {items.map(menuItem =>
-              menuItem.disabled ? (
-                <Menu.Item key={menuItem.key} disabled={true} icon={menuItem.icon}>
-                  {menuItem.label}
-                </Menu.Item>
-              ) : (
-                <Menu.Item key={menuItem.key} icon={menuItem.icon}>
-                  <Link to={menuItem.url}>{menuItem.label}</Link>
-                </Menu.Item>
-              )
-            )}
-          </Menu>
+        <div style={{ width: isCollapsed ? "80px" : "200px", position: "fixed" }}>
+          {!isCollapsed ? <h1 className={styleLayout.titleNav}>Tabloid News Management</h1> : ""}
+          <div className={styleLayout.groupItemNavbar}>
+            <Menu
+              theme="dark"
+              defaultSelectedKeys={[mapPathnameToKey[routePathName as EPath]]}
+              mode="inline"
+              onClick={handleMenu}
+            >
+              {items.map(menuItem =>
+                menuItem.disabled ? (
+                  <Menu.Item key={menuItem.key} disabled={true} icon={menuItem.icon}>
+                    {menuItem.label}
+                  </Menu.Item>
+                ) : (
+                  <Menu.Item key={menuItem.key} icon={menuItem.icon}>
+                    <Link to={menuItem.url}>{menuItem.label}</Link>
+                  </Menu.Item>
+                )
+              )}
+            </Menu>
+          </div>
         </div>
       </Sider>
       <Layout>

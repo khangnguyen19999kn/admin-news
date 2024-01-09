@@ -7,13 +7,14 @@ import { Button, DatePickerProps, Popconfirm, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 
-import { useDeleteStudent } from "@/services/api/students/useDeleteStudent";
-import { useUpdateStudent } from "@/services/api/students/useUpdateStudent";
+// import { useUpdateStudent } from "@/services/api/students/useUpdateStudent";
 
 import { TNews } from "../types";
 
 import ModalContentNews from "@/pages/ListNews/components/ModalContentNews";
-import useNotification from "@/pages/ListNews/hooks/useNotification";
+
+import useNotification from "@/constant/hooks/useNotification";
+import { useDeleteNews } from "@/services/api/news/useDeleteNews";
 
 interface ITableNews {
   listNews?: TNews[];
@@ -22,7 +23,7 @@ interface ITableNews {
 
 export default function TableNews({ listNews, refetch }: ITableNews) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { mutateAsync: deleteMutation } = useDeleteStudent();
+  const { mutateAsync: deleteNews } = useDeleteNews();
   const { openNotificationSuccess, contextHolder } = useNotification();
   const listDataShow = listNews?.map(news => {
     return {
@@ -30,9 +31,9 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
       key: news.id,
     };
   });
-  const confirmDelete = async (key: string) => {
-    await deleteMutation(key);
-    openNotificationSuccess("top", "Success", "Student has been deleted");
+  const confirmDelete = async (id: string) => {
+    await deleteNews(id);
+    openNotificationSuccess("top", "Success", "News has been deleted");
     return refetch();
   };
   const columns: ColumnsType<TNews> = [
@@ -135,8 +136,8 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const onFinish = async (values: TNews) => {
-    await updateStudentMutation(values as unknown as string);
+  const onFinish = (values: TNews) => {
+    // await updateStudentMutation(values as unknown as string);
     setIsModalOpen(false);
     openNotificationSuccess("top", "Success", "Student has been updated");
     return refetch();
@@ -149,7 +150,7 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
     console.log(dateString);
   };
 
-  const { mutateAsync: updateStudentMutation } = useUpdateStudent();
+  // const { mutateAsync: updateStudentMutation } = useUpdateStudent();
 
   // const handleTestButton = (id: string) => {
   //   const detailStudent = listDataShow?.filter(student => student.Id === id)[0];

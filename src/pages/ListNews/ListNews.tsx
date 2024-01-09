@@ -3,16 +3,16 @@
 import Button from "antd/lib/button";
 import Input from "antd/lib/input";
 import Skeleton from "antd/lib/skeleton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import useNotification from "@/constant/hooks/useNotification";
 import style from "@/pages/ListNews/ListNewsStyle.module.scss";
 import TableNews from "@/pages/ListNews/components/TableNews";
-import useNotification from "@/pages/ListNews/hooks/useNotification";
 import { useGetNewsList } from "@/services/api/news/useGetAllNews";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 export default function ListNews() {
   const [inputName, setInputName] = useState("");
-  const { data: ListNews, isLoading } = useGetNewsList();
+  const { data: ListNews, isLoading, refetch } = useGetNewsList();
   const { openNotificationSuccess, contextHolder } = useNotification();
   let timeout: NodeJS.Timeout | null = null;
 
@@ -46,7 +46,7 @@ export default function ListNews() {
         </Link>
       </div>
 
-      {isLoading ? <Skeleton active /> : <TableNews listNews={ListNews} />}
+      {isLoading ? <Skeleton active /> : <TableNews listNews={ListNews} refetch={refetch} />}
     </div>
   );
 }

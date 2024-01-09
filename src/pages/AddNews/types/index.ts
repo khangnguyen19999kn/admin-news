@@ -4,5 +4,6 @@ export type TFormAddNews = {
   topic: string;
   tags: string[];
   content: string;
+  author: string;
   bannerImg: string;
 };
