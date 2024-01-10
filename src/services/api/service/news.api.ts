@@ -1,4 +1,4 @@
-import { TFormAddNews } from "@/pages/AddNews/types";
+import { TFormAddNews } from "@/pages/AddUpdateNews/types";
 import { TNews } from "@/pages/ListNews/types";
 import { UseMutationOptions } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";

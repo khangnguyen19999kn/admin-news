@@ -1,6 +1,6 @@
 import Editor from "@/elements/Editor";
 import { TFileInfo, TStateImageUpload, TUploadBeforeResponse } from "@/elements/Editor/types";
-import { TFormAddNews } from "@/pages/AddNews/types";
+import { TFormAddNews } from "@/pages/AddUpdateNews/types";
 import { useDeleteImage } from "@/services/api/images/useDeleteImage";
 import { useUploadImage } from "@/services/api/images/useUploadImage";
 import { EImageStatusEditor } from "@/services/enum";

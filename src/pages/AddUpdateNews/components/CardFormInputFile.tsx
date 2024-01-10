@@ -1,5 +1,5 @@
-import { gridStyleForInput, gridStyleForNote } from "@/pages/AddNews/const";
-import { TFormAddNews } from "@/pages/AddNews/types";
+import { gridStyleForInput, gridStyleForNote } from "@/pages/AddUpdateNews/const";
+import { TFormAddNews } from "@/pages/AddUpdateNews/types";
 import { useDeleteImage } from "@/services/api/images/useDeleteImage";
 import { useUploadImage } from "@/services/api/images/useUploadImage";
 import { Button, Card, Form, Input } from "antd";

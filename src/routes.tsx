@@ -1,5 +1,5 @@
 import LayoutContainer from "@/elements/layoutContainer/LayoutContainer";
-import AddNews from "@/pages/AddNews/AddNews";
+import AddNews from "@/pages/AddUpdateNews/AddNews";
 import ListNews from "@/pages/ListNews/ListNews";
 import { paths } from "@/services/paths";
 

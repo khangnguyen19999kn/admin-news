@@ -3,11 +3,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, DatePickerProps, Popconfirm, Table } from "antd";
+import { Button, DatePickerProps, Popconfirm, Popover, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useState } from "react";
-
-// import { useUpdateStudent } from "@/services/api/students/useUpdateStudent";
+import tableStyles from "./styles/tableStyle.module.scss";
 
 import { TNews } from "../types";
 
@@ -46,39 +45,54 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      render: (id: string) => (
+        <Popover content={id} trigger={"hover"}>
+          <p className={tableStyles.row}>{id}</p>
+        </Popover>
+      ),
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      render: (title: string) => (
+        <Popover content={title} trigger={"hover"}>
+          <p className={tableStyles.row}>{title}</p>
+        </Popover>
+      ),
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      render: (description: string) => (
+        <Popover content={description} trigger={"hover"}>
+          <p className={tableStyles.row}>{description}</p>
+        </Popover>
+      ),
     },
     {
       title: "Topic",
       dataIndex: "topic",
       key: "topic",
+      render: (topic: string) => <p className={tableStyles.row}>{topic}</p>,
     },
     {
       title: "Author",
       dataIndex: "author",
       key: "author",
+      render: (author: string) => (
+        <Popover content={author} trigger={"hover"}>
+          <p className={tableStyles.row}>{author}</p>
+        </Popover>
+      ),
     },
     {
       title: "BannerImg",
       dataIndex: "bannerImg",
       key: "bannerImg",
       render: (bannerImg: string) => (
-        <a
-          style={{
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            width: "300px",
-            display: "inline-block",
-          }}
-          target="_blank"
-          rel="noreferrer"
-          href={bannerImg}
-        >
+        <a className={tableStyles.row} target="_blank" rel="noreferrer" href={bannerImg}>
           {bannerImg}
         </a>
       ),
@@ -87,6 +101,11 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
       title: "View",
       dataIndex: "viewCount",
       key: "viewCount",
+      render: (viewCount: string) => (
+        <Popover content={viewCount} trigger={"hover"}>
+          <p className={tableStyles.viewRow}>{viewCount}</p>
+        </Popover>
+      ),
     },
     {
       title: "Action",
@@ -94,24 +113,26 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
       key: "key",
       render: (id: string) => (
         <div>
-          <Button
-            type="primary"
-            style={{ marginRight: "10px" }}
-            onClick={() => {
-              handleShowContent(id);
-            }}
-            icon={<EyeOutlined />}
-          >
-            Content
-          </Button>
-          <Button
-            type="primary"
-            style={{ backgroundColor: "#228B22", marginRight: "10px" }}
-            onClick={() => showModal(id)}
-            icon={<EditOutlined />}
-          >
-            Update
-          </Button>
+          <Popover content="Content News" trigger={"hover"}>
+            <Button
+              type="primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                handleShowContent(id);
+              }}
+            >
+              <EyeOutlined />
+            </Button>
+          </Popover>
+          <Popover content="Edit News" trigger={"hover"}>
+            <Button
+              type="primary"
+              style={{ backgroundColor: "#228B22", marginRight: "10px" }}
+              onClick={() => showModal(id)}
+            >
+              <EditOutlined />
+            </Button>
+          </Popover>
           <Popconfirm
             title="Delete News"
             description="Are you sure to delete this News?"
@@ -121,9 +142,11 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
             okText="Yes"
             cancelText="No"
           >
-            <Button type="primary" danger icon={<DeleteOutlined />}>
-              Delete
-            </Button>
+            <Popover content="Delete News" trigger={"hover"}>
+              <Button type="primary" danger>
+                <DeleteOutlined />
+              </Button>
+            </Popover>
           </Popconfirm>
         </div>
       ),

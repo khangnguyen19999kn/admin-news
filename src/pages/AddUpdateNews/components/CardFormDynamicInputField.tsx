@@ -3,8 +3,8 @@ import {
   formItemLayoutWithOutLabel,
   gridStyleForListForm,
   gridStyleForNote,
-} from "@/pages/AddNews/const";
-import { TFormAddNews } from "@/pages/AddNews/types";
+} from "@/pages/AddUpdateNews/const";
+import { TFormAddNews } from "@/pages/AddUpdateNews/types";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input } from "antd";
 
@@ -37,7 +37,7 @@ export default function CardFormDynamicInputField({
             <>
               {fields.map((field, index) => (
                 <Form.Item
-                  label={index === 0 ? label : ""}
+                  label={index === 0 ? <p style={{ marginRight: "5px" }}>{label}</p> : ""}
                   {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
                   style={{ width: "100%", marginBottom: "10px" }}
                   required={false}

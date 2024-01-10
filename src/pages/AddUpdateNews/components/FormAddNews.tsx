@@ -1,11 +1,11 @@
 import useNotification from "@/constant/hooks/useNotification";
-import CardFormDynamicInputField from "@/pages/AddNews/components/CardFormDynamicInputField";
-import CardFormFieldInput from "@/pages/AddNews/components/CardFormFieldInput";
-import CardFormFieldSelect from "@/pages/AddNews/components/CardFormFieldSelect";
-import CardFormInputFile from "@/pages/AddNews/components/CardFormInputFile";
-import EditorField from "@/pages/AddNews/components/EditorField";
-import { optionTopic } from "@/pages/AddNews/const";
-import { TFormAddNews } from "@/pages/AddNews/types";
+import CardFormDynamicInputField from "@/pages/AddUpdateNews/components/CardFormDynamicInputField";
+import CardFormFieldInput from "@/pages/AddUpdateNews/components/CardFormFieldInput";
+import CardFormFieldSelect from "@/pages/AddUpdateNews/components/CardFormFieldSelect";
+import CardFormInputFile from "@/pages/AddUpdateNews/components/CardFormInputFile";
+import EditorField from "@/pages/AddUpdateNews/components/EditorField";
+import { optionTopic } from "@/pages/AddUpdateNews/const";
+import { TFormAddNews } from "@/pages/AddUpdateNews/types";
 import { newsKeys } from "@/services/api/news/queryKey";
 import { useCreateNews } from "@/services/api/news/useCreateNews";
 import { useQueryClient } from "@tanstack/react-query";
@@ -19,11 +19,12 @@ export default function FormAddNews() {
   const { openNotification, contextHolder } = useNotification();
   const navigate = useNavigate();
   const onFinish = (values: TFormAddNews) => {
+    console.log("Success:", values);
     addNews({ ...values, author: "Khang Nguyễn" })
       .then(() => {
         openNotification("top", "Success", "News has been created");
       })
-      .catch(error => {
+      .catch((error: Error) => {
         openNotification("top", "Error", "News has not been created");
         console.error("Error adding news:", error);
       });
@@ -38,13 +39,28 @@ export default function FormAddNews() {
       });
   };
   const [form] = Form.useForm<TFormAddNews>();
+  const initialValues: TFormAddNews = {
+    title: "123",
+    description: "",
+    topic: "",
+    tags: ["123", "123", "456"],
+    author: "",
+    bannerImg: "",
+    content: "",
+  };
   const setFieldValue = (name: keyof TFormAddNews, value: string) => {
     form.setFieldsValue({ [name]: value });
   };
   return (
     <>
       {contextHolder}
-      <Form name="basic" onFinish={onFinish} autoComplete="off" form={form}>
+      <Form
+        name="basic"
+        onFinish={onFinish}
+        autoComplete="off"
+        form={form}
+        initialValues={initialValues}
+      >
         <Card title="Thêm bài viết mới">
           <CardFormFieldInput name="title" label="Title" rules={["Nhập title cho bài viết"]} />
           <CardFormFieldInput

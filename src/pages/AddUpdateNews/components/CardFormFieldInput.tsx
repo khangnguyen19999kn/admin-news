@@ -1,5 +1,5 @@
-import { gridStyleForInput, gridStyleForNote } from "@/pages/AddNews/const";
-import { TFormAddNews } from "@/pages/AddNews/types";
+import { gridStyleForInput, gridStyleForNote } from "@/pages/AddUpdateNews/const";
+import { TFormAddNews } from "@/pages/AddUpdateNews/types";
 import { Card, Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 

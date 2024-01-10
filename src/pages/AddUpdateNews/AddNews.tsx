@@ -1,4 +1,4 @@
-import FormAddNews from "@/pages/AddNews/components/FormAddNews";
+import FormAddNews from "@/pages/AddUpdateNews/components/FormAddNews";
 
 export default function AddNews() {
   return (
