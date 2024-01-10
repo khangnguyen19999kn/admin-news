@@ -23,8 +23,9 @@ interface ITableNews {
 
 export default function TableNews({ listNews, refetch }: ITableNews) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [content, setContent] = useState("");
   const { mutateAsync: deleteNews } = useDeleteNews();
-  const { openNotificationSuccess, contextHolder } = useNotification();
+  const { openNotification, contextHolder } = useNotification();
   const listDataShow = listNews?.map(news => {
     return {
       ...news,
@@ -33,8 +34,12 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
   });
   const confirmDelete = async (id: string) => {
     await deleteNews(id);
-    openNotificationSuccess("top", "Success", "News has been deleted");
+    openNotification("top", "Success", "News has been deleted");
     return refetch();
+  };
+  const handleShowContent = (content: string) => {
+    setIsModalOpen(true);
+    setContent(content);
   };
   const columns: ColumnsType<TNews> = [
     {
@@ -87,12 +92,14 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
       title: "Action",
       dataIndex: "key",
       key: "key",
-      render: (key: string) => (
+      render: (id: string) => (
         <div>
           <Button
             type="primary"
             style={{ marginRight: "10px" }}
-            onClick={() => showModal(key)}
+            onClick={() => {
+              handleShowContent(id);
+            }}
             icon={<EyeOutlined />}
           >
             Content
@@ -100,7 +107,7 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
           <Button
             type="primary"
             style={{ backgroundColor: "#228B22", marginRight: "10px" }}
-            onClick={() => showModal(key)}
+            onClick={() => showModal(id)}
             icon={<EditOutlined />}
           >
             Update
@@ -109,7 +116,7 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
             title="Delete News"
             description="Are you sure to delete this News?"
             onConfirm={() => {
-              return confirmDelete(key);
+              return confirmDelete(id);
             }}
             okText="Yes"
             cancelText="No"
@@ -139,7 +146,7 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
   const onFinish = (values: TNews) => {
     // await updateStudentMutation(values as unknown as string);
     setIsModalOpen(false);
-    openNotificationSuccess("top", "Success", "Student has been updated");
+    openNotification("top", "Success", "Student has been updated");
     return refetch();
   };
 
@@ -160,7 +167,7 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
     <div>
       {contextHolder}
       <ModalContentNews
-        content={"<h1>FUCK</h1>"}
+        content={content}
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}

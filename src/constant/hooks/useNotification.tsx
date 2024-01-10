@@ -4,7 +4,7 @@ import { NotificationPlacement } from "antd/es/notification/interface";
 export default function useNotification() {
   const [api, contextHolder] = notification.useNotification();
 
-  const openNotificationSuccess = (
+  const openNotification = (
     placement: NotificationPlacement,
     message: string,
     description: string,
@@ -29,7 +29,7 @@ export default function useNotification() {
     }
   };
   return {
-    openNotificationSuccess,
+    openNotification,
     contextHolder,
   };
 }

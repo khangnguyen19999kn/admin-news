@@ -13,7 +13,7 @@ import { Link, useParams } from "react-router-dom";
 export default function ListNews() {
   const [inputName, setInputName] = useState("");
   const { data: ListNews, isLoading, refetch } = useGetNewsList();
-  const { openNotificationSuccess, contextHolder } = useNotification();
+  const { openNotification, contextHolder } = useNotification();
   let timeout: NodeJS.Timeout | null = null;
 
   const debouncedHandleInputName = (value: string) => {
