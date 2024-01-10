@@ -100,7 +100,7 @@ export default function EditorField() {
           }
         }
 
-        canvas.width = 960;
+        canvas.width = width;
         canvas.height = height;
 
         ctx = canvas.getContext("2d");
