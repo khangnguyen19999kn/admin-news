@@ -1,11 +1,11 @@
-import { DesktopOutlined, FileOutlined, PieChartOutlined } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Button, Layout, Menu, Popconfirm, theme } from "antd";
 import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { EPath } from "@/services/enum";
 import { mapPathToLabel, mapPathnameToKey } from "@/services/map";
 
+import { DesktopOutlined, FileOutlined, PieChartOutlined } from "@ant-design/icons";
 import styleLayout from "./LayoutContainerStyle.module.scss";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -18,47 +18,43 @@ type TMenuItem = {
   url: string;
 };
 
-const items: TMenuItem[] = [
-  {
-    key: "1",
-    icon: <PieChartOutlined />,
-    label: "News List",
-    url: EPath.LIST_NEWS,
-  },
-  {
-    key: "2",
-    icon: <DesktopOutlined />,
-    label: "User List",
-    url: EPath.LIST_USER,
-  },
-  {
-    key: "3",
-    icon: <FileOutlined />,
-    label: "List Report",
-    url: EPath.LIST_REPORT,
-  },
-  // {
-  //   key: "4",
-  //   icon: <TeamOutlined />,
-  //   label: "Team",
-  //   disabled: true,
-  //   url: EPath.TEAM,
-  // },
-  // {
-  //   key: "5",
-  //   icon: <UserOutlined />,
-  //   label: "User",
-  //   disabled: true,
-  //   url: EPath.USER,
-  // },
-];
-
-export default function LayoutContainer({ children }: { children: ReactNode }) {
+interface ILayoutContainerProps {
+  children: ReactNode;
+  displayName: string;
+  isAdmin: boolean;
+  handleLogout: () => void;
+}
+export default function LayoutContainer({
+  children,
+  displayName,
+  isAdmin = false,
+  handleLogout,
+}: ILayoutContainerProps) {
   const [isCollapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
   const routePathName = pathname.split("/")[1];
   const [breadcrumb, setBreadcrumb] = useState<string>(mapPathToLabel[routePathName as EPath]);
-
+  const items: TMenuItem[] = [
+    {
+      key: "1",
+      icon: <PieChartOutlined />,
+      label: "News List",
+      url: EPath.LIST_NEWS,
+    },
+    {
+      key: "2",
+      icon: <DesktopOutlined />,
+      label: "User List",
+      disabled: !isAdmin,
+      url: EPath.LIST_USER,
+    },
+    {
+      key: "3",
+      icon: <FileOutlined />,
+      label: "List Report",
+      url: EPath.LIST_REPORT,
+    },
+  ];
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -95,6 +91,14 @@ export default function LayoutContainer({ children }: { children: ReactNode }) {
               )}
             </Menu>
           </div>
+        </div>
+        <div className={styleLayout.groupSideLogout}>
+          <p className={styleLayout.groupSideLogout__displayName}>{displayName}</p>
+          <Popconfirm title="Are you sure you want to sign out" onConfirm={handleLogout}>
+            <Button className={styleLayout.groupSideLogout__button_logout} type="primary" danger>
+              Logout
+            </Button>
+          </Popconfirm>
         </div>
       </Sider>
       <Layout>

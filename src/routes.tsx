@@ -1,30 +1,24 @@
-import LayoutContainer from "@/elements/layoutContainer/LayoutContainer";
+import PrivateRoute from "@/elements/PrivateRoute/PrivateRoute";
 import AddNews from "@/pages/AddUpdateNews/AddNews";
 import ListNews from "@/pages/ListNews/ListNews";
+import Login from "@/pages/Login/Login";
 import { paths } from "@/services/paths";
 
-import { Outlet, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
-    errorElement: (
-      <LayoutContainer>
-        <p>Wrong</p>
-      </LayoutContainer>
-    ),
+    errorElement: <p>Wrong</p>,
+
     children: [
       {
+        path: paths.home,
+        element: <Login />,
+      },
+      {
         path: "",
-        element: (
-          <LayoutContainer>
-            <Outlet />
-          </LayoutContainer>
-        ),
+        element: <PrivateRoute />,
         children: [
-          {
-            path: paths.home,
-            element: <p>Home</p>,
-          },
           {
             path: paths.news.list,
             element: <ListNews />,

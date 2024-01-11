@@ -1,12 +1,16 @@
 .row{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100px;
     display: inline-block;
+    width: 100px;
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
     cursor: pointer;
 }
+
 .viewRow{
     width: 50px;
+
     cursor: pointer;
 }

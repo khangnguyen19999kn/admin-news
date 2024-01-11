@@ -19,7 +19,6 @@ export default function FormAddNews() {
   const { openNotification, contextHolder } = useNotification();
   const navigate = useNavigate();
   const onFinish = (values: TFormAddNews) => {
-    console.log("Success:", values);
     addNews({ ...values, author: "Khang Nguyễn" })
       .then(() => {
         openNotification("top", "Success", "News has been created");

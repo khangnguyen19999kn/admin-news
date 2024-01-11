@@ -2,11 +2,35 @@
   margin-top: 30px;
 }
 
-.titleNav{
+.titleNav {
   margin-top: 20px;
 
   color: #fff;
   font-weight: 600;
   font-size: 20px;
   text-align: center;
+}
+
+.groupSideLogout {
+  position: absolute;
+  top: 55%;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+
+  color: #fff;
+
+  &__button_logout {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+  }
+
+  &__displayName {
+    width: 100%;
+
+    text-align: center;
+  }
 }

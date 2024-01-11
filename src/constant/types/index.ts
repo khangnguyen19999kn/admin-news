@@ -3,3 +3,8 @@ export type TOption = {
   value: string;
   disabled?: boolean;
 };
+export type TError = Error & {
+  response: {
+    data: string;
+  };
+};

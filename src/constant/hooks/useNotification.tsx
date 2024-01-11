@@ -14,6 +14,7 @@ export default function useNotification() {
       message: message,
       description: description,
       placement,
+      duration: 2,
     };
     switch (type) {
       case "success":
