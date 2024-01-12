@@ -1,4 +1,4 @@
 export const newsKeys = {
   all: () => ["news-list"] as const,
-  content: (id: number, params: any) => [...newsKeys.all(), "list", id, params] as const,
+  content: (id: string) => [...newsKeys.all(), "list", id] as const,
 };

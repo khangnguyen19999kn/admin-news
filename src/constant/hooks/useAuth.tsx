@@ -7,9 +7,11 @@ export default function useAuth() {
   const { mutateAsync: checkToken } = useCheckToken();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const checkTokenValidity = useCallback(() => {
     const token = localStorage.getItem("token");
+    const willAdmin = true;
     if (!token) {
       setAuthenticated(false);
       setIsLoading(false);
@@ -18,6 +20,7 @@ export default function useAuth() {
     checkToken(token)
       .then(() => {
         setAuthenticated(true);
+        setIsAdmin(willAdmin);
       })
       .catch(() => {
         localStorage.removeItem("token");
@@ -42,5 +45,6 @@ export default function useAuth() {
     isAuthenticated,
     isLoading,
     handleLogout,
+    isAdmin,
   };
 }

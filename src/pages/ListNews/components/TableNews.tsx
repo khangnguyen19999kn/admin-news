@@ -22,7 +22,7 @@ interface ITableNews {
 
 export default function TableNews({ listNews, refetch }: ITableNews) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [content, setContent] = useState("");
+  const [idNews, setIdNews] = useState("");
   const { mutateAsync: deleteNews } = useDeleteNews();
   const { openNotification, contextHolder } = useNotification();
   const listDataShow = listNews?.map(news => {
@@ -36,9 +36,9 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
     openNotification("top", "Success", "News has been deleted");
     return refetch();
   };
-  const handleShowContent = (content: string) => {
+  const handleShowContent = (id: string) => {
     setIsModalOpen(true);
-    setContent(content);
+    setIdNews(id);
   };
   const columns: ColumnsType<TNews> = [
     {
@@ -180,17 +180,11 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
     console.log(dateString);
   };
 
-  // const { mutateAsync: updateStudentMutation } = useUpdateStudent();
-
-  // const handleTestButton = (id: string) => {
-  //   const detailStudent = listDataShow?.filter(student => student.Id === id)[0];
-  //   setDataDetail(detailStudent);
-  // };
   return (
     <div>
       {contextHolder}
       <ModalContentNews
-        content={content}
+        id={idNews}
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}

@@ -22,6 +22,7 @@ export type TConfigMutation<
 const pathNewsAPI = {
   allNews: "/news",
   deleteNews: (id: string) => `/news/${id}`,
+  detailById: (id: string) => `/news/detail/${id}`,
 };
 export const newsApiBase = axios.create({
   baseURL: import.meta.env.VITE_NEWS_API as string,
@@ -38,6 +39,10 @@ const newsApi = {
   },
   async createNews(news: TFormAddNews) {
     const response = await newsApiBase.post<TActionResponse>(pathNewsAPI.allNews, news);
+    return response.data;
+  },
+  async getDetailNews(id: string) {
+    const response = await newsApiBase.get<TNews>(pathNewsAPI.detailById(id));
     return response.data;
   },
 };

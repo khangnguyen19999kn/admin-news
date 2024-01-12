@@ -1,4 +1,5 @@
 import PrivateRoute from "@/elements/PrivateRoute/PrivateRoute";
+import ProtectedRoute from "@/elements/ProtectedRoute/ProtectedRoute";
 import AddNews from "@/pages/AddUpdateNews/AddNews";
 import ListNews from "@/pages/ListNews/ListNews";
 import Login from "@/pages/Login/Login";
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
           },
           {
             path: paths.users,
-            element: <p>Users</p>,
+            element: (
+              <ProtectedRoute>
+                <p>Users</p>
+              </ProtectedRoute>
+            ),
           },
           {
             path: paths.reports,
