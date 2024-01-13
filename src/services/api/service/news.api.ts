@@ -21,7 +21,7 @@ export type TConfigMutation<
 
 const pathNewsAPI = {
   allNews: "/news",
-  deleteNews: (id: string) => `/news/${id}`,
+  changeNewWithId: (id: string) => `/news/${id}`,
   detailById: (id: string) => `/news/detail/${id}`,
 };
 export const newsApiBase = axios.create({
@@ -34,7 +34,7 @@ const newsApi = {
     return response.data;
   },
   async deleteNews(id: string) {
-    const response = await newsApiBase.delete<TActionResponse>(pathNewsAPI.deleteNews(id));
+    const response = await newsApiBase.delete<TActionResponse>(pathNewsAPI.changeNewWithId(id));
     return response.data;
   },
   async createNews(news: TFormAddNews) {
@@ -43,6 +43,10 @@ const newsApi = {
   },
   async getDetailNews(id: string) {
     const response = await newsApiBase.get<TNews>(pathNewsAPI.detailById(id));
+    return response.data;
+  },
+  async updateNews(id: string, news: TFormAddNews) {
+    const response = await newsApiBase.put<TActionResponse>(pathNewsAPI.changeNewWithId(id), news);
     return response.data;
   },
 };

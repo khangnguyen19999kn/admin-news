@@ -14,6 +14,8 @@ import ModalContentNews from "@/pages/ListNews/components/ModalContentNews";
 
 import useNotification from "@/constant/hooks/useNotification";
 import { useDeleteNews } from "@/services/api/news/useDeleteNews";
+import { mapSlugToNameTopic } from "@/services/map";
+import { Link } from "react-router-dom";
 
 interface ITableNews {
   listNews?: TNews[];
@@ -75,7 +77,7 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
       title: "Topic",
       dataIndex: "topic",
       key: "topic",
-      render: (topic: string) => <p className={tableStyles.row}>{topic}</p>,
+      render: (topic: string) => <p className={tableStyles.row}>{mapSlugToNameTopic[topic]}</p>,
     },
     {
       title: "Author",
@@ -125,13 +127,11 @@ export default function TableNews({ listNews, refetch }: ITableNews) {
             </Button>
           </Popover>
           <Popover content="Edit News" trigger={"hover"}>
-            <Button
-              type="primary"
-              style={{ backgroundColor: "#228B22", marginRight: "10px" }}
-              onClick={() => showModal(id)}
-            >
-              <EditOutlined />
-            </Button>
+            <Link to={`update/${id}`}>
+              <Button type="primary" style={{ backgroundColor: "#228B22", marginRight: "10px" }}>
+                <EditOutlined />
+              </Button>
+            </Link>
           </Popover>
           <Popconfirm
             title="Delete News"

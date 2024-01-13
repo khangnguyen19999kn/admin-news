@@ -9,7 +9,11 @@ import { useRef } from "react";
 import { UploadBeforeHandler, UploadInfo } from "suneditor-react/dist/types/upload";
 import SunEditorCore from "suneditor/src/lib/core";
 import editorStyle from "./styles/editorStyle.module.scss";
-export default function EditorField() {
+
+interface IEditorField {
+  defaultValues?: string;
+}
+export default function EditorField({ defaultValues }: IEditorField) {
   const editor = useRef<SunEditorCore>();
   const getSunEditorInstance = (sunEditor: SunEditorCore) => {
     editor.current = sunEditor;
@@ -151,6 +155,7 @@ export default function EditorField() {
             getSunEditorInstance={getSunEditorInstance}
             onImageUpload={handleImageStateChange}
             onImageUploadBefore={handleImageUploadBefore}
+            defaultValue={defaultValues}
           />
         </Form.Item>
       </Card.Grid>

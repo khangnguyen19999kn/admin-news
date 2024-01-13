@@ -9,6 +9,7 @@ interface ICardFormFieldInputFileProps {
   label: string;
   rules: string[];
   setFieldValue: (name: keyof TFormAddNews, value: string) => void;
+  defaultValues?: string;
 }
 
 export default function CardFormInputFile({
@@ -16,9 +17,10 @@ export default function CardFormInputFile({
   label,
   rules,
   setFieldValue,
+  defaultValues,
 }: ICardFormFieldInputFileProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [fileName, setFileName] = useState<string>("");
+  const [fileName, setFileName] = useState<string>(defaultValues || "");
   const isChooseFile = fileName === "";
   const { mutateAsync: uploadImage, isPending } = useUploadImage();
   const { mutateAsync: deleteImage } = useDeleteImage();

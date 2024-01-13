@@ -8,25 +8,27 @@ import { optionTopic } from "@/pages/AddUpdateNews/const";
 import { TFormAddNews } from "@/pages/AddUpdateNews/types";
 import { newsKeys } from "@/services/api/news/queryKey";
 import { useCreateNews } from "@/services/api/news/useCreateNews";
+import { useUpdateNews } from "@/services/api/news/useUpdateNews";
+import { useManagementDisplayName } from "@/zustands/useManagementDisplayName";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button, Card, Form } from "antd";
 import { useNavigate } from "react-router-dom";
 import "suneditor/dist/css/suneditor.min.css";
 
-export default function FormAddNews() {
+interface IFormAddNews {
+  defaultValues: TFormAddNews;
+  type?: "add" | "update";
+  id?: string;
+}
+
+export default function FormAddNews({ defaultValues, type = "add", id }: IFormAddNews) {
   const { mutateAsync: addNews } = useCreateNews();
+  const { displayName } = useManagementDisplayName();
+  const { mutateAsync: updateNews } = useUpdateNews(id || "");
   const QueryClient = useQueryClient();
   const { openNotification, contextHolder } = useNotification();
   const navigate = useNavigate();
-  const onFinish = (values: TFormAddNews) => {
-    addNews({ ...values, author: "Khang Nguyễn" })
-      .then(() => {
-        openNotification("top", "Success", "News has been created");
-      })
-      .catch((error: Error) => {
-        openNotification("top", "Error", "News has not been created");
-        console.error("Error adding news:", error);
-      });
+  const revalidate = () => {
     QueryClient.invalidateQueries({
       queryKey: newsKeys.all(),
     })
@@ -37,16 +39,29 @@ export default function FormAddNews() {
         console.error("Error invalidateQueries:", error);
       });
   };
-  const [form] = Form.useForm<TFormAddNews>();
-  const initialValues: TFormAddNews = {
-    title: "123",
-    description: "",
-    topic: "",
-    tags: ["123", "123", "456"],
-    author: "",
-    bannerImg: "",
-    content: "",
+  const onFinish = (values: TFormAddNews) => {
+    console.log("Success:", type);
+    if (type === "add") {
+      addNews({ ...values, author: displayName })
+        .then(() => {
+          openNotification("top", "Success", "News has been added");
+          revalidate();
+        })
+        .catch(err => {
+          console.error(err);
+        });
+      return;
+    }
+    updateNews({ ...values, author: defaultValues.author })
+      .then(() => {
+        openNotification("top", "Success", "News has been updated");
+        revalidate();
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
+  const [form] = Form.useForm<TFormAddNews>();
   const setFieldValue = (name: keyof TFormAddNews, value: string) => {
     form.setFieldsValue({ [name]: value });
   };
@@ -58,7 +73,7 @@ export default function FormAddNews() {
         onFinish={onFinish}
         autoComplete="off"
         form={form}
-        initialValues={initialValues}
+        initialValues={defaultValues}
       >
         <Card title="Thêm bài viết mới">
           <CardFormFieldInput name="title" label="Title" rules={["Nhập title cho bài viết"]} />
@@ -81,11 +96,12 @@ export default function FormAddNews() {
             label="Banner Image"
             rules={["Nhập Banner Image cho bài viết"]}
             setFieldValue={setFieldValue}
+            defaultValues={defaultValues.bannerImg}
           />
-          <EditorField />
+          <EditorField defaultValues={defaultValues.content} />
           <div style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}>
             <Button type="primary" htmlType="submit">
-              Submit
+              {type === "add" ? "Thêm" : "Cập nhật"}
             </Button>
           </div>
         </Card>

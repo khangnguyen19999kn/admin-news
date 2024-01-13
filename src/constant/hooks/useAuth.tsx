@@ -1,10 +1,12 @@
 import { useCheckToken } from "@/services/api/users/useCheckToken";
+import { useManagementDisplayName } from "@/zustands/useManagementDisplayName";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function useAuth() {
   const navigate = useNavigate();
   const { mutateAsync: checkToken } = useCheckToken();
+  const { setDisplayName } = useManagementDisplayName();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -18,7 +20,8 @@ export default function useAuth() {
       return;
     }
     checkToken(token)
-      .then(() => {
+      .then(res => {
+        setDisplayName(res.displayName || "");
         setAuthenticated(true);
         setIsAdmin(willAdmin);
       })

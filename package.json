@@ -19,6 +19,7 @@
     "@emotion/utils": "^1.2.1",
     "@tabler/icons-react": "^2.25.0",
     "@tanstack/react-query": "^5.0.5",
+    "add": "^2.0.6",
     "antd": "^5.10.2",
     "axios": "^1.6.0",
     "dayjs": "^1.11.10",
@@ -28,6 +29,7 @@
     "react-router-dom": "^6.10.0",
     "suneditor": "^2.45.1",
     "suneditor-react": "^3.6.1",
+    "yarn": "^1.22.21",
     "zustand": "^4.4.7"
   },
   "devDependencies": {

@@ -11,6 +11,7 @@ type TLoginResponse = {
 };
 type TCheckTokenResponse = {
   valid: boolean;
+  displayName: string;
   message: string;
 };
 const usersAPI = {

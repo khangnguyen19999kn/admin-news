@@ -6,6 +6,7 @@ import Login from "@/pages/Login/Login";
 import { paths } from "@/services/paths";
 
 import { createBrowserRouter } from "react-router-dom";
+import UpdateNews from "./pages/AddUpdateNews/UpdateNews";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
           {
             path: paths.news.addNews,
             element: <AddNews />,
+          },
+          {
+            path: paths.news.updateNews,
+            element: <UpdateNews />,
           },
           {
             path: paths.users,

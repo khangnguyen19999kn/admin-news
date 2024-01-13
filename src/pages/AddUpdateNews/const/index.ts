@@ -1,5 +1,6 @@
 import { ETopic } from "@/pages/ListNews/const";
-import { mapNameTopicToSlug } from "@/pages/ListNews/const/map";
+import { mapNameTopicToSlug } from "@/services/map";
+import { TFormAddNews } from "../types";
 
 export const gridStyleForInput: React.CSSProperties = {
   width: "70%",
@@ -108,3 +109,12 @@ export const optionTopic = [
     label: ETopic.BOOK,
   },
 ];
+export const initialValues: TFormAddNews = {
+  title: "",
+  description: "",
+  topic: "",
+  tags: [],
+  author: "",
+  bannerImg: "",
+  content: "",
+};

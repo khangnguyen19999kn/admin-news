@@ -8,5 +8,6 @@ export const useGetDetailNews = (id: string) => {
     queryKey: newsKeys.content(id),
     queryFn: () => newsApi.getDetailNews(id),
     staleTime: CACHE_DATA_STALE_TIME.MEDIUM,
+    enabled: !!id,
   });
 };
