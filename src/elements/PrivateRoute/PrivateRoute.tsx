@@ -4,8 +4,8 @@ import { useManagementDisplayName } from "@/zustands/useManagementDisplayName";
 import { Navigate, Outlet } from "react-router-dom";
 
 export default function PrivateRoute() {
-  const { isAuthenticated, isLoading, handleLogout, isAdmin } = useAuth();
-  const { displayName } = useManagementDisplayName();
+  const { isAuthenticated, isLoading, handleLogout } = useAuth();
+  const { displayName, isAdmin } = useManagementDisplayName();
 
   if (isLoading) return <div></div>;
   return (

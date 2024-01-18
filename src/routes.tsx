@@ -7,6 +7,7 @@ import { paths } from "@/services/paths";
 
 import { createBrowserRouter } from "react-router-dom";
 import UpdateNews from "./pages/AddUpdateNews/UpdateNews";
+import ListUser from "./pages/ListUsers/ListUsers";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
             path: paths.users,
             element: (
               <ProtectedRoute>
-                <p>Users</p>
+                <ListUser />
               </ProtectedRoute>
             ),
           },

@@ -1,8 +1,8 @@
-import useAuth from "@/constant/hooks/useAuth";
+import { useManagementDisplayName } from "@/zustands/useManagementDisplayName";
 import { Navigate } from "react-router-dom";
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAdmin } = useAuth();
+  const { isAdmin } = useManagementDisplayName();
 
   if (isAdmin) {
     return <>{children}</>;

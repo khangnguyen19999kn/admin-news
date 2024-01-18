@@ -23,6 +23,7 @@ const pathNewsAPI = {
   allNews: "/news",
   changeNewWithId: (id: string) => `/news/${id}`,
   detailById: (id: string) => `/news/detail/${id}`,
+  searchByTitle: (title: string) => `/news/search?searchTerm=${title}`,
 };
 export const newsApiBase = axios.create({
   baseURL: import.meta.env.VITE_NEWS_API as string,
@@ -47,6 +48,10 @@ const newsApi = {
   },
   async updateNews(id: string, news: TFormAddNews) {
     const response = await newsApiBase.put<TActionResponse>(pathNewsAPI.changeNewWithId(id), news);
+    return response.data;
+  },
+  async searchNews(title: string) {
+    const response = await newsApiBase.get<TNews[]>(pathNewsAPI.searchByTitle(title));
     return response.data;
   },
 };

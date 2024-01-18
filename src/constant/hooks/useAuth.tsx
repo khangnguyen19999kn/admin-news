@@ -6,14 +6,13 @@ import { useNavigate } from "react-router-dom";
 export default function useAuth() {
   const navigate = useNavigate();
   const { mutateAsync: checkToken } = useCheckToken();
+  const { setIsAdmin } = useManagementDisplayName();
   const { setDisplayName } = useManagementDisplayName();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const checkTokenValidity = useCallback(() => {
     const token = localStorage.getItem("token");
-    const willAdmin = true;
     if (!token) {
       setAuthenticated(false);
       setIsLoading(false);
@@ -23,7 +22,7 @@ export default function useAuth() {
       .then(res => {
         setDisplayName(res.displayName || "");
         setAuthenticated(true);
-        setIsAdmin(willAdmin);
+        setIsAdmin(res.isAdmin);
       })
       .catch(() => {
         localStorage.removeItem("token");
@@ -48,6 +47,5 @@ export default function useAuth() {
     isAuthenticated,
     isLoading,
     handleLogout,
-    isAdmin,
   };
 }

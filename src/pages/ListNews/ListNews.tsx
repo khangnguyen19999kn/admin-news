@@ -1,22 +1,25 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import Button from "antd/lib/button";
 import Input from "antd/lib/input";
 import Skeleton from "antd/lib/skeleton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import useNotification from "@/constant/hooks/useNotification";
 import style from "@/pages/ListNews/ListNewsStyle.module.scss";
 import TableNews from "@/pages/ListNews/components/TableNews";
 import { useGetNewsList } from "@/services/api/news/useGetAllNews";
-import { Link, useParams } from "react-router-dom";
+import { useSearchNews } from "@/services/api/news/useSearchNews";
+import { Link } from "react-router-dom";
 export default function ListNews() {
   const [inputName, setInputName] = useState("");
   const { data: ListNews, isLoading, refetch } = useGetNewsList();
+  const { data: dataSearch, isLoading: isSearchLoading } = useSearchNews(inputName);
   const { openNotification, contextHolder } = useNotification();
   let timeout: NodeJS.Timeout | null = null;
 
   const debouncedHandleInputName = (value: string) => {
+    console.log(value);
     setInputName(value);
   };
 
@@ -38,7 +41,7 @@ export default function ListNews() {
       <div className={style.groupInputButton}>
         <Input
           className={style.input}
-          placeholder="Enter the name of student to find"
+          placeholder="Enter the title of news to find"
           onChange={handleInputName}
         />
         <Link to="addNews">
@@ -46,7 +49,11 @@ export default function ListNews() {
         </Link>
       </div>
 
-      {isLoading ? <Skeleton active /> : <TableNews listNews={ListNews} refetch={refetch} />}
+      {isLoading || isSearchLoading ? (
+        <Skeleton active />
+      ) : (
+        <TableNews listNews={dataSearch || ListNews} refetch={refetch} />
+      )}
     </div>
   );
 }
